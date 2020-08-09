@@ -1,0 +1,186 @@
+<div class="jumbotron_rpd">       
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Previous
+        </div>
+        <div
+          class="btn btn-outline-secondary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+        >
+          Today
+        </div>
+        <div
+          class="btn btn-primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en':weekStartsOn:excludeDays }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Month)"
+          [class.active]="view === CalendarView.Month"
+        >
+          Month
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week"
+        >
+          Week
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day"
+        >
+          Day
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      [excludeDays]="excludeDays"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      (hourSegmentClicked)="hourSegmentClicked($event.date)"
+      [excludeDays]="excludeDays"
+      [dayStartHour]="8"
+      [dayEndHour]="20"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      (hourSegmentClicked)="hourSegmentClicked($event.date)"
+      [dayStartHour]="8"
+      [dayEndHour]="20"
+    >
+    </mwl-calendar-day-view>
+  </div>
+</div>
+<!--Reserve appointment -> Pet Owners-->
+<ng-template #modalAppointmentRes let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">{{reservationDate | date:'medium'}}</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Make an appointment for {{currentUser.pet_data.name}}-{{currentUser.pet_data.species}}: 
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="successReservation" type="button" class="btn btn-outline-secondary" (click)="saveReservation()">
+      Confirm
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      Close
+    </button>
+    <p *ngIf="successReservation">Sacuvano!</p>
+  </div>
+</ng-template>
+
+<!--View details or examine the pet -> Veterinarian-->
+<ng-template #modalPetExam let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Appointment details</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-pet-profile-basic [pet]="clickedEventDetails"></app-pet-profile-basic>
+    <div class="table-responsive">
+      <table class="table">
+        <tr>
+          <td><a class='btn btn-info' (click)='clickPetExam()' routerLink='/pet-profile/basic/{{clickedEventDetails?.id}}/1'>Pet details</a></td>
+          <td *ngIf='clickedEventDetails?.examined == "0"'><a class='btn btn-info' (click)='clickPetExam()' routerLink='/exam/add/{{clickedEventDetails?.id}}/1'>Exam</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<!--View details or examine the pet -> Pet owner-->
+<ng-template #modalPetOwner let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Details</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-pet-profile-basic [pet]="clickedEventDetails"></app-pet-profile-basic>
+    <div class="table-responsive">
+      <table class="table">
+        <tr>
+          <td><a class='btn btn-info' (click)='closePetOwnerModal()' routerLink='/pet-profile/basic/{{clickedEventDetails?.id}}'>Pet details</a></td>
+          <td *ngIf='clickedEventDetails?.examined == "0"'><button class='btn btn-danger' (click)='clickCancelApp()'>Cancel appointment</button></td>
+          <td *ngIf='appointmentCanceled'>Succesfully canceled!</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+
+</ng-template>

@@ -1,0 +1,17 @@
+<div class="jumbotron_rpd">       
+    <div class="row">            
+        <div class="col-sm-6 offset-sm-3"> 
+          <h1>Popular articles</h1>
+          <div *ngFor="let news of newsFeed; let i = index;" class="card">
+            <div class="card-body">
+              <h3 class="card-title">{{news.caption}}</h3>
+              <img width="80" height='80' src='/api/pets/uploads/news/{{news.image}}' alt='No picture'>
+              <p class="card-text">{{news.body}}...</p>
+              <a routerLink="/news/{{news.id}}" class="card-link">Read</a>
+              <small style="float: right;">{{news.date}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+

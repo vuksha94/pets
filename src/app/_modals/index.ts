@@ -1,0 +1,1 @@
+export * from './profile-modal/profile-modal.component';

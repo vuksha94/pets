@@ -1,0 +1,521 @@
+/* You can add global styles to this file, and also import other style files */
+/************************** Added with extension _rpd********************************/
+
+ /*Including a theme*/
+ @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+  @font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/assets/materialicons/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+         local('MaterialIcons-Regular'),
+         url(/assets/materialicons/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+         url(/assets/materialicons/iconfont/MaterialIcons-Regular.woff) format('woff'),
+         url(/assets/materialicons/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+ }
+
+ /*******************Adedd with pets***************************************/
+
+ .click-p_pets {
+  cursor: pointer;
+  border: 2px solid grey;
+  border-radius: 8px;
+  padding: 5px;
+  font-size: 20px;
+  font-style: italic;
+ }
+
+ .div-p_pets {
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 5px;
+  margin-bottom: 12px;
+ }
+ 
+ .material-icons {
+   font-family: 'Material Icons';
+   font-weight: normal;
+   font-style: normal;
+   font-size: 24px;  /* Preferred icon size */
+   display: inline-block;
+   line-height: 1;
+   text-transform: none;
+   letter-spacing: normal;
+   word-wrap: normal;
+   white-space: nowrap;
+   direction: ltr;
+ 
+   /* Support for all WebKit browsers. */
+   -webkit-font-smoothing: antialiased;
+   /* Support for Safari and Chrome. */
+   text-rendering: optimizeLegibility;
+ 
+   /* Support for Firefox. */
+   -moz-osx-font-smoothing: grayscale;
+ 
+   /* Support for IE. */
+   font-feature-settings: 'liga';
+ }
+
+  #toTop {
+    padding: 5px 3px;
+    /*background: #000;
+    color: #fff;*/
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    display: none;
+    z-index: 50;
+  }
+
+  .shop-cart_rpd {
+    position: absolute;
+    background-color: rgb(248, 239, 239);
+    border: 2px solid #47588F;
+    border-radius: 2px;
+    right: 0;
+    z-index: 100;
+  }
+
+  .shop-cart-table_rpd tbody tr td {
+    padding-right: 15px;
+  }
+  
+  .content_inside_rpd {
+    padding-bottom: 20px;
+  }
+
+  /* Bootsrap overrides */
+
+  #bootstrap-overrides .table {
+    margin-bottom: 0;
+  }
+
+  #bootstrap-overrides .table thead th {
+    border-bottom: 0;
+  } 
+
+  #bootstrap-overrides .table tr td {
+    vertical-align: middle;
+  }
+
+  
+  #bootstrap-overrides .modal-content {
+    background-color: #f6f6f6;
+  }
+
+  #bootstrap-overrides .table_rpd > thead > tr > th {
+    padding: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-size: 0.82rem;
+  }
+  #bootstrap-overrides .table-profile_rpd td,
+  #bootstrap-overrides .table_rpd td {
+    color: #000;
+    vertical-align: middle;
+    padding: 4px;
+  }#bootstrap-overrides .table-profile_rpd tbody,
+  #bootstrap-overrides .table_rpd tbody {
+    font-size: 13px;
+  }
+   
+
+  #bootstrap-overrides .table_rpd td.border-left {
+    border-left: 1px solid #dad9e8;
+  }
+  #bootstrap-overrides .table_rpd thead tr {
+    background-color: #e9ecef;
+  }
+  /*
+  #bootstrap-overrides .table-result_rpd tbody tr:first-child {
+    border: 2px solid #47588F;
+  }*/
+  #bootstrap-overrides .table-profile_rpd tr:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+  #bootstrap-overrides .table-profile_rpd tr:nth-child(even) {
+    background-color: #fff;
+  }
+  #bootstrap-overrides .table_rpd tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  #bootstrap-overrides .table_rpd tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+  #bootstrap-overrides .table_rpd tbody button {
+    border-radius: 20px;
+    border: 1px solid #bfbecc;
+  }
+
+
+  #bootstrap-overrides .p-for-info-art_rpd {
+    font-size: 12px;
+    font-weight: normal;
+  }
+  #bootstrap-overrides .table-for-info-art_rpd,
+  #bootstrap-overrides .table-for-vehicles_rpd {
+    font-size: 12px;
+  }
+  #bootstrap-overrides .table-for-info-art_rpd td,
+  #bootstrap-overrides .table-for-vehicles_rpd td {
+    padding: 0.3rem;
+    border: 1px solid #e2d6d6;
+    /*font-weight: 500;*/
+  }
+  #bootstrap-overrides .table-for-info-art_rpd th,
+  #bootstrap-overrides .table-for-vehicles_rpd th {
+    padding: 0.5rem 0.6rem;
+    border-top: 0;
+    font-weight: normal;
+    background-color: lightgray;
+  }
+  #bootstrap-overrides .table-for-info-art_rpd tr,
+  #bootstrap-overrides .table-for-vehicles_rpd tr {
+    height: 30px;
+  }
+  #bootstrap-overrides .table-for-info-art-header_rpd {
+    margin-bottom: 30px;
+  }
+  #bootstrap-overrides .table-for-vehicles-header_rpd {
+    margin-bottom: 0;
+  }
+  #bootstrap-overrides .table-for-info-art-header_rpd tr,
+  #bootstrap-overrides .table-for-vehicles-header_rpd tr {
+    background-color: #e9ecef;
+    color: #212529;
+    font-size: 13px;
+    height: 33px; 
+  }
+  
+  #bootstrap-overrides .th-for-vehicles-brand_rpd,
+  #bootstrap-overrides .table-for-info-art-header_rpd tr th,
+  #bootstrap-overrides .table-for-vehicles-header_rpd tr th {
+    font-weight: bold !important;
+  }
+
+  .btn-modal-close_rpd {
+    height: 36px !important;
+    font-size: 14px !important;
+    background-color: #fff;
+    border: 1px solid grey !important;
+  }
+ 
+  .btn-modal-close_rpd:hover {
+    background-color: #f1f1f1;
+  }
+
+  #bootstrap-overrides .modal-header,
+  #bootstrap-overrides .modal-body {
+    padding: 0.7rem 1rem;
+  }
+
+  #bootstrap-overrides .modal-footer {
+    margin: 0 auto;
+    border-top: 0;
+  }
+
+  #bootstrap-overrides .hr-cena_rpd {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  #bootstrap-overrides .padding-cena_rpd {
+    padding: 0 2px 0 4px  !important;
+  }
+  #bootstrap-overrides .div-cena_rpd .span-cena_rpd {
+    font-size: 13px;
+  }
+  #bootstrap-overrides .div-cena_rpd .span-cena-uk_rpd {
+    font-size: 15px;
+  }
+  
+  /* /Bootstrap overrides */
+
+
+
+  .mat-icon_rpd {
+    line-height: 40px !important;
+    font-size: 30px;
+  }
+  .mat-icon-history_rpd {
+    color: #bdc0c7;
+  }
+  .material-icons-navbar_rpd {
+    background-color: transparent;
+    color: #f9fbfd;  
+  }
+  .material-icons-navbar-active_rpd, .material-icons-navbar_rpd:hover {
+    color: #FFF;
+    font-weight: bolder;
+  }
+
+  
+  .mat-tooltip {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    margin: 4px !important;
+  }
+
+
+  .button-history_rpd {
+    margin: 2px 0;
+    border-radius: 4px;
+    width: 50%;
+    font-size: 12px;
+    border-style: none;
+    border: 1px solid #b3a8a8;
+    cursor: pointer;
+  }
+
+  .alert_rpd {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    /*margin-bottom: 1rem;*/
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  /*.nav-item-3_rpd {
+    width: 33%;
+  }*/
+  .navbar-nav .nav-item_rpd {
+    margin: 0 15px;
+  }
+  .nav-item_rpd .active_rpd {
+    border-bottom: 2px solid #47588f;
+    font-weight: bold;
+  }
+  .bg-white_rpd {
+    background-color: white;
+  }
+  .bg-red_rpd {
+    background-color: #dd3333 !important;
+  }
+  .bg-blue_rpd {
+    background-color: #47588F !important;
+  }
+  .logo_rpd {
+    position: absolute;
+    bottom: 12px;
+    left: 10px;
+  }
+  #searchclear_rpd {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    line-height: 38px;
+    padding: 0 0.2rem;
+    font-size: 16px;
+    cursor: pointer;
+    color: #3366cc;
+  }
+
+  .admin-div_rpd {
+    border: 2px solid rgb(71, 88, 143);
+    margin: 2px;
+    height: calc(100vh - 105px);
+    height: -moz-calc(100vh - 105px);
+    height: -webkit-calc(100vh - 105px);
+    overflow: scroll;
+  }
+
+  .auto-part-image_rpd, .brand-logo_rpd {
+    height: 36px;
+    width: 66px;
+    object-fit: contain;
+    border: 1px solid #a9a9a9;
+    border-radius: 7px;
+    background-color: #ffffff;
+    padding: 2px;
+  }
+
+  .auto-part-container_rpd {
+    position: relative;
+  }
+  .auto-part-results_rpd {
+    position: absolute;
+    top: 162px;
+    right: 0;
+    left: 0;
+  }
+  .brand-logo_rpd {
+    float:left;
+  }
+  .auto-part-image_rpd{
+    cursor: pointer;
+  }
+  
+  .auto-part-image-modal_rpd {
+    width: 100%;
+    height: 100%;
+  }
+  
+  
+  .semaphor_rpd {
+    height: 18px;
+    width: 18px;
+    /*background-color: #bbb;*/
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .green-semaphor_rpd {
+    background-color: green;
+  }
+  .red-semaphor_rpd {
+    background-color: red;
+  }
+  .footer_rpd {
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    background-color: #f6f6f6;
+    font-size: 0.8rem;
+    margin-top: -20px;
+  } 
+  .footer_rpd a {
+    color: #47588F;
+  }
+  .nav-search_rpd {
+    font-size: 15px;
+  }
+
+  .history_rpd {
+    max-height: 356px;
+  }
+  .filtered-autoparts_rpd {
+    max-height: 370px;
+  }
+  .history_rpd,
+  .filtered-autoparts_rpd {
+    line-height: 1rem;
+    overflow-y: scroll;
+    border: 1px solid #bdc0c7;
+    border-radius: 5px;
+    background: rgba(233, 233, 233, 1);
+  }
+  .list-autoparts_rpd a {
+    color: #000;
+  }
+  
+  .filtered-autoparts_rpd div:nth-child(even) a:first-child {
+    background-color: #fafafa;
+  }
+  /*mora i ovo jer ne radi .list-autoparts_rpd a:hover za sve*/
+  .filtered-autoparts_rpd div:nth-child(even) a:first-child:hover {
+    background-color: #dddddd;
+  }
+  
+  .list-autoparts_rpd a:hover {
+    background-color: #dddddd;
+    color: #000;
+  }
+  .list-autoparts_rpd span {
+    font-size: 14px;
+    padding-left: 1rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .height-nav_rpd {
+    height: 40px;
+  }
+  .wrapper_rpd {
+    min-height: 100%;
+    
+  }
+  .push_rpd {
+    height: 28px;
+  }
+  .navbar-icons_rpd {
+    height: 100%;
+  }
+  .search-auto-part-div_rpd {
+    width: 56%;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 600px) {
+    .search-auto-part-div_rpd {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 399.9px) {
+    .footer_rpd {
+      position: relative;
+    }
+    .navbar-icons_rpd {
+      margin-left: 0 !important;
+    }
+
+  }
+
+ @media screen and (min-width: 400px) {
+    .navbar-icons_rpd {
+      margin-left: auto !important;
+    }
+  }
+  .user-details_rpd {
+    font-size: 0.8rem;
+  }
+  .search-auto-part_rpd {
+    position: relative;
+    height: 40px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+  
+  .search-auto-part_rpd input[type=text]:focus {
+    box-shadow: 0px 0px 0 1px rgba(0, 123, 255, 0.25);
+  }
+
+  html, body {
+    height: 100%;
+  }
+ 
+  .jumbotron_rpd {
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    /*background-color: #e9ecef;*/
+    border-radius: 0.3rem;
+  }
+
+  .navbar_rpd {
+    height: inherit;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  .auto-part-img_rpd {
+    height: 34px;
+    width: 34px;
+    -o-object-fit: contain;
+    object-fit: contain;
+    /*border: 1px solid #a9a9a9;*/
+    /*border-radius: 17px;*/
+    /*background-color: #ffffff;*/ 
+    padding: 2px;
+    margin: 0 5px 4px 8px;
+  }
+
+  
+/*
+  .modal-scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  */
+  /* navbar-nav izmenjen
+    /*****************-----------------------KRAJ_RPD---------------------------***************/

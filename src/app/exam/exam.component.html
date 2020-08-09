@@ -1,0 +1,65 @@
+<div class="jumbotron_rpd">       
+    <div class="row">            
+        <div class="col-sm-6 offset-sm-3"> 
+            <div>
+              <h3>Pet Info</h3>
+            </div>
+              <div style="float:right">
+                <a class="btn btn-info" routerLink='/pet-profile/basic/{{selectedId}}'>Pet details</a>
+              </div>
+            <app-pet-profile-basic [pet]="petInfo"></app-pet-profile-basic>
+            <h3>Add examination</h3>
+            <form [formGroup]="addExamForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="description">Examination report</label>
+                    <textarea type="text" rows="4" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ></textarea>
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Required</div>
+                    </div>
+                </div>
+                <p class="click-p_pets" (click)="toggleShowVaccination()">Vaccination</p>
+                <div class="div-p_pets" *ngIf="showVaccination" formGroupName="vaccination">
+                  <div class="form-group">
+                      <label for="vacc_desc">Vaccination description</label>
+                      <input type="text" formControlName="vacc_desc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vaccination['controls'].vacc_desc.errors }" />
+                      <div *ngIf="submitted && f.vaccination['controls'].vacc_desc.errors" class="invalid-feedback">
+                          <div *ngIf="f.vaccination['controls'].vacc_desc.errors.required">Required</div>
+                      </div>
+                  </div>
+                </div>
+                <p class="click-p_pets" (click)="toggleShowMedApp()">Medicine application</p>
+                <div class="div-p_pets" *ngIf="showMedApp" formGroupName="medicine">
+                  <div class="form-group">
+                    <label for="medDesc">Medicine description</label>
+                    <input type="text" formControlName="medDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.medicine['controls'].medDesc.errors }" />
+                    <div *ngIf="submitted && f.medicine['controls'].medDesc.errors" class="invalid-feedback">
+                        <div *ngIf="f.medicine['controls'].medDesc.errors.required">Required</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="medDateFrom">From</label>
+                    <input type="date" (change)="setFromDateValidator()" formControlName="medDateFrom" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.medicine['controls'].medDateFrom.errors }" />
+                    <div *ngIf="submitted && f.medicine['controls'].medDateFrom.errors" class="invalid-feedback">
+                        <div *ngIf="f.medicine['controls'].medDateFrom.errors.required">Required</div>
+                        <div *ngIf="f.medicine['controls'].medDateFrom.errors.fromDateHigherThanToDate">From date must be lesser than To date</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="medDateTo">To</label>
+                    <input type="date" (change)="setToDateValidator()" formControlName="medDateTo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.medicine['controls'].medDateTo.errors }" />
+                    <div *ngIf="submitted && f.medicine['controls'].medDateTo.errors" class="invalid-feedback">
+                        <div *ngIf="f.medicine['controls'].medDateTo.errors.required">Required</div>
+                        <div *ngIf="f.medicine['controls'].medDateTo.errors.toDateLessThanFromDate">From date must be lesser than To date</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                </div>
+            </form>
+    </div>
+  </div>
+  </div>
+  

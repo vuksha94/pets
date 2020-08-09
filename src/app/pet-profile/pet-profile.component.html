@@ -1,0 +1,249 @@
+<div class="jumbotron_rpd">       
+  <div class="row">           
+      <div class="col-sm-6 offset-sm-3">
+        <div *ngIf="currentUser.user_data.rola == 'Pet owner'">
+          <app-select-profile></app-select-profile>
+            <!--<a class="nav-item_rpd" routerLink="/add-pet-profile" matTooltip="Add profile">
+              <i class="material-icons mat-icon_rpd">add_circle</i>
+              Add pet profile
+            </a>-->
+        </div> 
+        
+    </div>
+  </div>
+  <div class="row" *ngIf="petInfo">            
+    <div class="col-sm-6 offset-sm-3">
+      <img width="80" height='80' src='/api/pets/uploads/pet_profiles/{{petInfo.image}}'>
+    </div>
+  </div>
+  <div class="row">            
+    <div class="col-sm-6 offset-sm-3">
+        <div *ngIf="!petInfo">No pet profiles!</div>
+        <div *ngIf="petInfo" class="form-group">
+            <ul class="nav justify-content-center nav-search_rpd"><!--nav-search_rpd: font-size: 15px -->
+                <li class="nav-item_rpd nav-item-3_rpd">
+                    <a class="nav-link" [class.active_rpd]="selectedType=='basic'" (click)="selectType('basic')">BASIC</a>
+                </li>
+                <li class="nav-item_rpd nav-item-3_rpd">
+                    <a class="nav-link" [class.active_rpd]="selectedType=='details'" (click)="selectType('details')">DETAILS</a>
+                </li>
+                <li class="nav-item_rpd nav-item-3_rpd">
+                    <a class="nav-link" [class.active_rpd]="selectedType=='medical'" (click)="selectType('medical')">MEDICAL</a>
+                </li>
+
+            </ul>
+        </div>
+      <div *ngIf="petInfo && type == 'basic'">
+        <table class="table table-profile_rpd">
+          <tr>
+            <th>Name</th><td>{{petInfo.name}}</td>
+          </tr>
+          <tr>
+            <th>Species</th><td>{{petInfo.species}}</td>
+          </tr>
+          <tr>
+            <th>Breed</th><td>{{petInfo.breed}}</td>
+          </tr>
+          <tr>
+            <th>Weight</th><td>{{petInfo.weight}}</td>
+          </tr>
+          <tr>
+            <th>Birth date</th><td>{{petInfo.date_of_birth}}</td>
+          </tr>
+          
+        </table>
+      </div>
+
+      <div *ngIf="petInfo && helpers && type == 'details'">
+        <table class="table table-profile_rpd">
+          <tr>
+            <th>Indoor</th><td>{{petInfo.is_indoor}}</td>
+          </tr>
+          <tr>
+            <th>Food type</th><td>{{petInfo.food_type}}</td>
+          </tr>
+          <tr>
+            <th>Meal size</th><td>{{petInfo.meal_size}}</td>
+          </tr>
+          <tr>
+            <th>Meals per day</th><td>{{petInfo.meals_per_day}}</td>
+          </tr>
+          <tr>
+            <th>Physical activity</th><td>{{petInfo.physical_activity}}</td>
+          </tr>
+          <tr>
+              <th>Travelling</th><td>{{petInfo.traveling}}</td>
+            </tr>
+        </table>
+        <a *ngIf="currentUser.user_data.rola == 'Pet owner'" class="nav-item_rpd" (click)="openEditModal()" matTooltip="Edit profile">
+            <i class="material-icons mat-icon_rpd">create</i>
+        </a>
+
+      <!-- Modal windows -> Details Edit -->
+        <ng-template #modalContentEdit let-close="close">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit details</h5>
+            <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="onSubmitDetails()">
+              <mat-form-field>
+                <mat-label>Indoor/Outdoor</mat-label>
+                <select matNativeControl [(ngModel)]="petInfo.is_indoor" name="is_indoor">
+                  <option *ngFor="let row of helpers.is_indoor" [ngValue]="row.description">
+                    {{row.description}}
+                  </option>
+                </select>
+              </mat-form-field><br>
+              <mat-form-field>
+                  <mat-label>Food type</mat-label>
+                <input matInput type="text" name="food_type" [(ngModel)]="petInfo.food_type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.foodType.errors }" />
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-label>Meal size</mat-label>
+                <select matNativeControl [(ngModel)]="petInfo.meal_size" name="meal_size">
+                  <option value=""></option>
+                  <option *ngFor="let size of helpers.sizes" [ngValue]="size.description">
+                    {{size.description}}
+                  </option>
+                </select>
+              </mat-form-field><br>
+              <mat-form-field>
+                  <mat-label>Meals per day</mat-label>
+                <input matInput type="number" name="meals_per_day" [(ngModel)]="petInfo.meals_per_day" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meals_per_day.errors }" />
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-label>Physical activity</mat-label>
+                <select matNativeControl [(ngModel)]="petInfo.physical_activity" name="physical_activity">
+                  <option *ngFor="let frequency of helpers.frequencies" [ngValue]="frequency.description">
+                    {{frequency.description}}
+                  </option>
+                </select>
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-label>Travelling</mat-label>
+                <select matNativeControl [(ngModel)]="petInfo.traveling" name="traveling">
+                  <option *ngFor="let frequency of helpers.frequencies" [ngValue]="frequency.description">
+                    {{frequency.description}}
+                  </option>
+                </select>
+              </mat-form-field><br>
+              <div class="form-group">
+                  <button type="submit" [disabled]="loading" class="btn btn-primary">Save</button>
+                  <img *ngIf="loadingEdit" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+              </div>
+              <p *ngIf="successEdit">Saved!</p>
+            </form>
+          </div>
+
+        </ng-template>
+      </div> 
+
+      <div *ngIf="petInfo && type == 'medical'">
+        <p  class="click-p_pets" (click)="showDeseases = !showDeseases">Diseases</p>
+        <div *ngIf="showDeseases">
+          <a class="nav-item_rpd" (click)="openAddDeseaseModal()" matTooltip="Add diseases">
+              <i class="material-icons mat-icon_rpd">add_circle</i>
+          </a> Add diseases
+          <table *ngIf="petInfo.deseases?.chronic_deseases || petInfo.deseases?.allergies" class="table table-profile_rpd">
+            <tr>
+              <th>Chronical diseases</th><td>{{petInfo.deseases.chronic_deseases}}</td>
+            </tr>
+            <tr>
+              <th>Allergies</th><td>{{petInfo.deseases.allergies}}</td>
+            </tr>
+          </table>
+          <p *ngIf="!petInfo.deseases">No diseases!</p>
+        </div>
+
+        <p class="click-p_pets" (click)="showVaccination = !showVaccination">Vaccination</p>
+        <div *ngIf="showVaccination">
+            <table *ngIf="petInfo.vaccination_info.length" class="table table-profile_rpd">
+              <tr>
+                <th>Description</th>
+                <th>Date</th>
+              </tr>
+              <tr *ngFor="let vacc of petInfo.vaccination_info">
+                <td>{{vacc.vac_desc}}</td>
+                <td>{{vacc.vac_date}}</td>
+              </tr>
+            </table>
+            <p *ngIf="!petInfo.vaccination_info.length">No Vaccination!</p>
+          </div>
+
+        <p class="click-p_pets" (click)="showMedication = !showMedication">Medication</p>
+        <div *ngIf="showMedication">
+            <table *ngIf="petInfo.medication_application.length" class="table table-profile_rpd">
+                <tr>
+                  <th>Description</th>
+                  <th>From</th>
+                  <th>To</th>
+                </tr>
+                <tr *ngFor="let med_app of petInfo.medication_application">
+                  <td>{{med_app.ma_desc}}</td>
+                  <td>{{med_app.ma_date_from}}</td>
+                  <td>{{med_app.ma_date_to}}</td>
+                </tr>
+            </table>
+            <p *ngIf="!petInfo.medication_application.length">No Medication!</p>
+          </div>
+
+        <p class="click-p_pets" (click)="showExamReports = !showExamReports">Exam reports</p>
+        <div *ngIf="showExamReports">
+          <table *ngIf="petInfo.exam_report.length" class="table table-profile_rpd">
+              <tr>
+                <th>No</th>
+                <th>Date</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let exam_rep of petInfo.exam_report; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{exam_rep.er_date}}</td>
+                <td><a routerLink='/exam/{{exam_rep.id}}'>Details</a></td>
+              </tr>
+          </table>
+          <p *ngIf="!petInfo.exam_report.length">No Exam reports!</p>
+        </div>
+
+        <!-- Modal windows -> Add Desease -->    
+        <ng-template #modalContentAddDesease let-close="close">
+          <div class="modal-header">
+            <h5 class="modal-title">Add diseases</h5>
+            <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="onSubmitAddDesease()">
+              <mat-form-field>
+                <label for="chronic_deseases">Chronic diseases</label>
+                <input matInput type="text" name="chronic_deseases" [(ngModel)]="petInfo.deseases.chronic_deseases" class="form-control" />
+              </mat-form-field><br>
+              <mat-form-field>
+                <label for="allergies">Allergies</label>
+                <input matInput type="text" name="allergies" [(ngModel)]="petInfo.deseases.allergies" class="form-control" />
+              </mat-form-field><br>
+
+              <div class="form-group">
+                  <button type="submit" [disabled]="loadingAddDesease" class="btn btn-primary">Save</button>
+                  <img *ngIf="loadingAddDesease" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+              </div>
+              <p *ngIf="successAddDesease">Sacuvano!</p>
+            </form>
+          </div>
+        </ng-template>
+      </div>
+
+      <div *ngIf="currentUser.user_data.rola == 'Veterinarian'">
+          <a *ngIf="reservation == '1'; else other_content" routerLink="/exam/add/{{petId}}/1">Examine this pet</a>
+          <ng-template #other_content>
+              <a class="btn btn-info" routerLink="/exam/add/{{petId}}/0">Examine this pet</a>
+          </ng-template>
+      </div>
+    </div>
+    
+  </div>
+</div>
+

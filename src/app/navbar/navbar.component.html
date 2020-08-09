@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-sm-12">   
+        <div class="bg-white_rpd height-nav_rpd">
+            <div *ngIf="loggedIn" style="float: right; min-height: 40px;">
+                <div class="float-left" style="padding: 0.4rem 1rem">
+                    <span class="user-details_rpd" *ngIf="currentUser">
+                        {{currentUser.user_data.ime_prezime + ", " + currentUser.user_data.rola}}</span></div>
+                <div class="float-left">
+                    <a class="nav-link" style="padding: 0.4rem 1rem" (click)="logOut()"
+                    matTooltip="Odjava" >
+                        <img src="/api/pets/assets/log-out-black-right.png">
+                    </a>    
+                </div>
+            </div>
+        </div>
+        <div class="height-nav_rpd" style="clear: both">
+        <nav class="navbar_rpd navbar-expand-sm bg-blue_rpd navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-item_rpd" routerLink="/">
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">home</i>
+                    </a>
+                </li>   
+            </ul>
+            <ul class="navbar-nav navbar-icons_rpd"> 
+                <li *ngIf="loggedIn && currentUser.user_data.rola === 'Pet owner'" class="nav-item" matTooltip="Add pet profile">
+                    <a class="nav-item_rpd" routerLink="/add-pet-profile">
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">add_circle_outline</i>
+                    </a>
+                </li>        
+                <li *ngIf="loggedIn && currentUser.user_data.rola === 'Pet owner'" class="nav-item" matTooltip="Pet profiles">
+                    <a class="nav-item_rpd" routerLink="/pet-profile/basic">
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">pets</i>
+                    </a>
+                </li>  
+                <li *ngIf="loggedIn && currentUser.user_data.rola === 'Veterinarian'" class="nav-item" matTooltip="Add news">
+                    <a class="nav-item_rpd" routerLink="/news/add">
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">add_circle_outline</i>
+                    </a>
+                </li>          
+                <li *ngIf="loggedIn" class="nav-item" matTooltip="Appointments">
+                    <a class="nav-item_rpd" routerLink="/calendar">
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">calendar_today</i>
+                    </a>
+                </li>         
+                <li *ngIf="loggedIn" class="nav-item" matTooltip="Your account">
+                    <a class="nav-item_rpd" (click)='openProfileModal()'>
+                        <i class="material-icons mat-icon_rpd material-icons-navbar_rpd">account_box</i>
+                    </a>
+                </li>          
+            </ul>
+        </nav>
+        </div>
+    </div>
+</div>
+
+<ng-template #profileModal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Details</h5>
+        <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <table class="table table-profile_rpd" style="margin-bottom: 0;">
+            <tbody>
+            <tr>
+                <td>User: </td><td>{{currentUser?.user_data.ime_prezime}}</td>
+            </tr>
+            <tr>
+                <td>Phone number: </td><td>{{currentUser?.user_data.telefon}}</td>
+            </tr>
+            <tr>
+                <td>Adress: </td><td>{{currentUser?.user_data.adresa}}</td>
+            </tr>
+            <tr>
+                <td>Role: </td><td>{{currentUser?.user_data.rola}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">
+        Close
+        </button>
+    </div>
+</ng-template>
+
+
+
+    

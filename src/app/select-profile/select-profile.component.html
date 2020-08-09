@@ -1,0 +1,10 @@
+<form>
+  <mat-form-field>
+    <mat-label>Active pet profile</mat-label>
+    <select matNativeControl [ngModel]="selectedProfile" (ngModelChange)="onChange($event)" name="profiles">
+      <option *ngFor="let profile of myProfiles" [ngValue]="profile">
+        {{profile.name+'-'+profile.species}}
+      </option>
+    </select>
+  </mat-form-field>
+</form>
